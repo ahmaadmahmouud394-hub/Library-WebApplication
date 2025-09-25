@@ -24,7 +24,7 @@ namespace Library_WebApplication.Models
         public int IdRole { get; set; }
         public Role Role { get; set; }
 
-        public ICollection<Invoice> Invoices { get; set;
+        public ICollection<Invoice> Invoices { get; set; }
 
 
 
