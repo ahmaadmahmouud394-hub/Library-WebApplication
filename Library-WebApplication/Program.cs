@@ -16,7 +16,9 @@ builder.Services.AddScoped<BooksBO>();
 builder.Services.AddScoped<UserBO>();
 builder.Services.AddScoped<Encryption>();
 builder.Services.AddScoped<EmailValidation>();
-
+builder.Services.AddScoped<TipologyBO>();
+builder.Services.AddScoped<InvoicesBO>();
+builder.Services.AddScoped<PubblisherBO>();
 
 
 var app = builder.Build();
@@ -38,6 +40,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=User}/{action=Index}/{id?}");
+    pattern: "{controller=Pubblishers}/{action=Index}/{id?}");
 
 app.Run();

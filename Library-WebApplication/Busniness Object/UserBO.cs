@@ -19,5 +19,21 @@ namespace Library_WebApplication.Busniness_Object
             if (user != null) { user.IdRole = 1; user.Password = _encryption.Encrypt(user.Password); _context.Add(user); _context.SaveChanges(); return true; }
             else { return false; }
         }
+        public bool GetCreated(User user)
+        {
+            if (user != null) {user.Password = _encryption.Encrypt(user.Password); _context.Add(user); _context.SaveChanges(); return true; }
+            else { return false; }
+        }
+        public async Task<User?> FindUser(int id)
+        {
+            var UserFound = await _context.User.FindAsync(id);
+            return UserFound;
+        }
+        public bool GetEdited(User user)
+        {
+            _context.Update(user);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }
