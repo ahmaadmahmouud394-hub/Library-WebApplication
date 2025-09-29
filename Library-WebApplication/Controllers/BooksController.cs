@@ -1,7 +1,8 @@
-﻿using Library_WebApplication.Models;
+﻿using Library_WebApplication.Busniness_Object;
+using Library_WebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Library_WebApplication.Busniness_Object;
 
 namespace Library_WebApplication.Controllers
 {
@@ -25,8 +26,10 @@ namespace Library_WebApplication.Controllers
             return View(await appDbContext.ToListAsync());
         }
         // Get Method
-        public IActionResult Create() { 
-            
+        public IActionResult Create() {
+            ViewData["TipologyId"] = new SelectList(_context.Tipologys, "Id", "Name");
+            ViewData["AuthorId"] = new SelectList(_context.Authors, "Id", "FirstName");
+            ViewData["PubblisherId"] = new SelectList(_context.Publishers, "Id", "Name");
             return View();
         }
         [HttpPost]

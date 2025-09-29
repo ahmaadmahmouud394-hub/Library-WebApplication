@@ -19,6 +19,7 @@ builder.Services.AddScoped<EmailValidation>();
 builder.Services.AddScoped<TipologyBO>();
 builder.Services.AddScoped<InvoicesBO>();
 builder.Services.AddScoped<PubblisherBO>();
+builder.Services.AddScoped<AuthorBO>();
 
 
 var app = builder.Build();

@@ -25,7 +25,7 @@ namespace Library_WebApplication.Controllers
         public async Task<IActionResult> Index()
         {
             var Authors =  _authorBO.GetAllAuthors();
-            return View(Authors.ToListAsync());
+            return View(await Authors.ToListAsync());
         }
 
         // GET: Authors/Details/5
