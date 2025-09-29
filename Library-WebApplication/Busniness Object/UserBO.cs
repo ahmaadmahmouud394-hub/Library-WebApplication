@@ -1,0 +1,23 @@
+﻿using Library_WebApplication.Models;
+using Microsoft.AspNetCore.Mvc;
+using Library_WebApplication.Services;
+
+namespace Library_WebApplication.Busniness_Object
+{
+    public class UserBO
+    {
+        private readonly AppDbContext _context;
+        private readonly Encryption _encryption;
+
+        public UserBO(AppDbContext context, Encryption encryption)
+        {
+            _context = context;
+            _encryption = encryption;
+        }
+        public bool GetSignedUp(User user)
+        {
+            if (user != null) { user.IdRole = 1; user.Password = _encryption.Encrypt(user.Password); _context.Add(user); _context.SaveChanges(); return true; }
+            else { return false; }
+        }
+    }
+}

@@ -1,14 +1,23 @@
+using Library_WebApplication.Busniness_Object;
 using Library_WebApplication.Controllers;
 using Library_WebApplication.Models;
+using Library_WebApplication.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<AuthenticationBO>();
+builder.Services.AddScoped<BooksBO>();
+builder.Services.AddScoped<UserBO>();
+builder.Services.AddScoped<Encryption>();
+builder.Services.AddScoped<EmailValidation>();
+
+
 
 var app = builder.Build();
 
@@ -29,6 +38,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=User}/{action=Index}/{id?}");
 
 app.Run();

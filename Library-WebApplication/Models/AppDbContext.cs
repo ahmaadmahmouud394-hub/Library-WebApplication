@@ -17,7 +17,7 @@ namespace Library_WebApplication.Models
         public DbSet<Pubblisher> Publishers { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Tipology> Tipologys { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Book>()

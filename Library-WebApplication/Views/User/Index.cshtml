@@ -1,0 +1,88 @@
+﻿@model User
+
+@{
+    Layout = null;
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var usernameField = document.querySelector('input[name="Username"]');
+        if (usernameField) {
+            usernameField.focus();
+        }
+
+        var form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                var username = document.querySelector('input[name="Username"]').value;
+                var password = document.querySelector('input[name="Password"]').value;
+
+                if (!username.trim() || !password.trim()) {
+                    e.preventDefault();
+                    alert('Please fill in both username and password fields.');
+                    return false;
+                }
+            });
+        }
+
+        // Bootstrap form validation
+        // (function() {
+        //     'use strict';
+        //     window.addEventListener('load', function() {
+        //         var forms = document.getElementsByClassName('needs-validation');
+        //         var validation = Array.prototype.filter.call(forms, function(form) {
+        //             form.addEventListener('submit', function(event) {
+        //                 if (form.checkValidity() === false) {
+        //                     event.preventDefault();
+        //                     event.stopPropagation();
+        //                 }
+        //                 form.classList.add('was-validated');
+        //             }, false);
+        //         });
+        //     }, false);
+        // })();
+    });
+</script>
+
+<div class="login-container">
+    <div class="login-header">
+        <h1 class="login-title">
+            <i class="fas fa-users me-2">Login</i>
+        </h1>
+        <p class="login-subtitle">Library Management System</p>
+    </div>
+
+    @using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(A => A.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(A => A.UserName, new { @class = "form-label" })
+            @Html.TextBoxFor(A => A.UserName, new { @class = "form-control", placeholder = "Enter your username", required = "required" })
+            @Html.ValidationMessageFor(A => A.UserName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(A => A.Password, new { @class = "form-label" })
+            @Html.PasswordFor(A => A.Password, new { @class = "form-control", placeholder = "Enter your password", required = "required" })
+            @Html.ValidationMessageFor(A => A.Password, "", new { @class = "text-danger" })
+        </div>
+
+
+
+        <button type="submit" class="btn-login">
+            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+        </button>
+
+
+        <a href="@Url.Action("SignUp", "User")"> Don't have account </a>
+
+
+    }
+
+</div>
+
+
