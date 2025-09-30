@@ -1,0 +1,97 @@
+﻿@model Library_WebApplication.Models.Author
+
+@{
+    ViewData["Title"] = "Details";
+}
+@{
+    Layout = "_DataLayout";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .details-container {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        max-width: 650px;
+        width: 100%;
+    }
+
+    .details-title {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #0d6efd;
+        margin-bottom: 1rem;
+    }
+
+    dl {
+        margin-bottom: 1.5rem;
+    }
+
+    dt {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    dd {
+        margin-bottom: 0.75rem;
+        color: #212529;
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 8px 16px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #565e64;
+        }
+</style>
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="details-container">
+        <h1 class="details-title">📖 Author Details</h1>
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.FirstName)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.FirstName)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.LastName)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.LastName)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DateOfBirth)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateOfDeath)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DateOfDeath)</dd>
+        </dl>
+
+        <div class="d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary w-50">✏ Edit</a>
+            <a asp-action="Index" class="btn btn-secondary w-50">⬅ Back to List</a>
+        </div>
+    </div>
+</div>

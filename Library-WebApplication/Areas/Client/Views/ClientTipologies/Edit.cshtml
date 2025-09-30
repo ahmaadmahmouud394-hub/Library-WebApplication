@@ -1,0 +1,121 @@
+﻿@model Library_WebApplication.Models.Tipology
+
+@{
+    ViewData["Title"] = "Edit Tipology";
+    Layout = "_DataLayout";
+}
+
+<style>
+    /* Container & Card */
+    .custom-container {
+        max-width: 600px;
+        margin: 50px auto;
+    }
+
+    .custom-card {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .custom-card:hover {
+            transform: translateY(-3px);
+        }
+
+    /* Header */
+    .custom-card-header {
+        background: linear-gradient(135deg, #17a2b8, #117a8b);
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+        .custom-card-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+    /* Body */
+    .custom-card-body {
+        padding: 25px;
+    }
+
+    /* Form */
+    .form-label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 8px;
+    }
+
+    /* Buttons */
+    .custom-btn {
+        padding: 10px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-save {
+        background: #28a745;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-save:hover {
+            background: #218838;
+        }
+
+    .btn-back {
+        background: #6c757d;
+        color: #fff;
+    }
+
+        .btn-back:hover {
+            background: #5a6268;
+        }
+
+    /* Layout for buttons */
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+    }
+</style>
+
+<div class="custom-container">
+    <div class="custom-card">
+        <div class="custom-card-header">
+            <h2>Edit Tipology</h2>
+        </div>
+        <div class="custom-card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter tipology name..." />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="action-buttons">
+                    <a asp-action="Index" class="custom-btn btn-back">← Back to List</a>
+                    <button type="submit" class="custom-btn btn-save">💾 Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -6,7 +6,7 @@ namespace Library_WebApplication.Busniness_Object
 {
     public class AuthorBO
     {
-        private readonly AppDbContext _context;
+        private readonly AppDbContext  _context;
         public AuthorBO(AppDbContext context)
         {
             _context = context;

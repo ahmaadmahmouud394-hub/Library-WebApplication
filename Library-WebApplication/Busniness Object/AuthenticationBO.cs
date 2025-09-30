@@ -1,5 +1,6 @@
 ﻿using Library_WebApplication.Models;
 using Library_WebApplication.Services;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.Pkcs;
 
 namespace Library_WebApplication.Busniness_Object
@@ -16,22 +17,22 @@ namespace Library_WebApplication.Busniness_Object
             _encryption = encryption;
             _emailValidation = emailValidation;
         }
-        public bool GetAuthenticated(User user)
+        public User? GetAuthenticated(User user)
         {
 
             bool Email = _emailValidation.IsEmailValid(user.UserName);
             user.Password = _encryption.Encrypt(user.Password);
-            bool CheckAuth = false;
+            User? CheckAuth;
 
                 if (Email)
                 {
                     user.Email = (user.UserName).ToString();
                     user.UserName = null;
-                    CheckAuth = _context.User.Where(e => e.Email == user.Email && e.Password == user.Password).SingleOrDefault() != null;
+                    CheckAuth = _context.User.Where(e => e.Email == user.Email && e.Password == user.Password).Include(p => p.Role).SingleOrDefault();
                 }
                 else
                 {
-                    CheckAuth = _context.User.Where(e => e.UserName == user.UserName && e.Password == user.Password).SingleOrDefault() != null;
+                    CheckAuth = _context.User.Where(e => e.UserName == user.UserName && e.Password == user.Password).Include(p => p.Role).SingleOrDefault();
 
                 }
                 return CheckAuth;

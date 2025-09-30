@@ -27,8 +27,8 @@ namespace Library_WebApplication.Controllers
         [HttpPost]
         public ActionResult Index(User user)
         {
-            bool ChechAuth = _authBO.GetAuthenticated(user);
-            if (ChechAuth) { return RedirectToAction("Index", "Books"); }
+            User? ChechAuth = _authBO.GetAuthenticated(user);
+            if (ChechAuth != null) { return RedirectToAction("Index", "Books", new {area = ChechAuth.Role.Name}); }
             else { return NotFound(); }
         }
         public ActionResult SignUp()

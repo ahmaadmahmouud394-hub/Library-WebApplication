@@ -1,0 +1,112 @@
+﻿@model Library_WebApplication.Models.Book
+
+@{
+    ViewData["Title"] = "Book Details";
+}
+@{
+    Layout = "_DataLayout";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .details-container {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        max-width: 750px;
+        width: 100%;
+    }
+
+    .details-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 600;
+        color: #0d6efd;
+        margin-bottom: 1.5rem;
+    }
+
+    dl.row {
+        margin-bottom: 1.5rem;
+    }
+
+    dt {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    dd {
+        margin-bottom: 1rem;
+        color: #212529;
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 8px 16px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #565e64;
+        }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+</style>
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="details-container">
+        <h1 class="details-title">📖 Book Details</h1>
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-3">Author</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Author.FirstName)</dd>
+
+            <dt class="col-sm-3">Publisher</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Pubblisher.Name)</dd>
+
+            <dt class="col-sm-3">Tipology</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Tipology.Name)</dd>
+
+            <dt class="col-sm-3">Title</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+
+            <dt class="col-sm-3">Publishing Date</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.PublishingDate)</dd>
+
+            <dt class="col-sm-3">Price</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Price)</dd>
+        </dl>
+
+        <div class="btn-container mt-3">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">✏ Edit</a>
+            <a asp-action="Index" class="btn btn-secondary">⬅ Back to List</a>
+        </div>
+    </div>
+</div>

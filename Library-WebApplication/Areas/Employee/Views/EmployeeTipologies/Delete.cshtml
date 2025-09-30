@@ -1,0 +1,125 @@
+﻿@model Library_WebApplication.Models.Tipology
+
+@{
+    ViewData["Title"] = "Delete Tipology";
+    Layout = "_DataLayout";
+}
+
+<style>
+    /* Container & Card */
+    .custom-container {
+        max-width: 600px;
+        margin: 50px auto;
+    }
+
+    .custom-card {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .custom-card:hover {
+            transform: translateY(-3px);
+        }
+
+    /* Header */
+    .custom-card-header {
+        background: linear-gradient(135deg, #dc3545, #a71d2a);
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+        .custom-card-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+    /* Body */
+    .custom-card-body {
+        padding: 25px;
+    }
+
+        .custom-card-body h3 {
+            color: #dc3545;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+    /* Details list */
+    dl {
+        margin-bottom: 20px;
+    }
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd {
+        margin-bottom: 10px;
+    }
+
+    /* Buttons */
+    .custom-btn {
+        padding: 10px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-delete:hover {
+            background: #a71d2a;
+        }
+
+    .btn-back {
+        background: #6c757d;
+        color: #fff;
+        border: none;
+    }
+
+        .btn-back:hover {
+            background: #5a6268;
+        }
+
+    /* Footer buttons layout */
+    .form-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 25px;
+    }
+</style>
+
+<div class="custom-container">
+    <div class="custom-card">
+        <div class="custom-card-header">
+            <h2>Delete Tipology</h2>
+        </div>
+        <div class="custom-card-body">
+            <h3>⚠ Are you sure you want to delete this?</h3>
+
+            <dl class="row">
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Name)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <div class="form-footer">
+                    <a asp-action="Index" class="custom-btn btn-back">← Back to List</a>
+                    <button type="submit" class="custom-btn btn-delete">🗑 Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

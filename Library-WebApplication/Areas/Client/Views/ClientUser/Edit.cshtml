@@ -1,0 +1,126 @@
+﻿@model Library_WebApplication.Models.User
+
+@{
+    ViewData["Title"] = "Edit User";
+    Layout = "_DataLayout";
+}
+
+<h1 class="page-title">Edit User</h1>
+<hr />
+
+<div class="form-container">
+    <div class="form-card">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="FirstName" class="form-label fw-bold"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="LastName" class="form-label fw-bold"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Email" class="form-label fw-bold"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="DateOfBirth" class="form-label fw-bold"></label>
+                <input asp-for="DateOfBirth" class="form-control" type="date" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center mt-4">
+                <input type="submit" value="💾 Save" class="btn btn-primary me-2" />
+                <a asp-action="Index" class="btn btn-secondary">⬅️ Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .page-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #2c3e50;
+    }
+
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 70vh;
+    }
+
+    .form-card {
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .form-label {
+        font-size: 1rem;
+        color: #34495e;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 10px;
+        border: 1px solid #ced4da;
+    }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 4px rgba(13,110,253,0.4);
+        }
+
+    .btn {
+        border-radius: 8px;
+        padding: 8px 18px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            transform: scale(1.05);
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5c636a;
+            transform: scale(1.05);
+        }
+
+    .text-danger {
+        font-size: 0.9rem;
+    }
+</style>

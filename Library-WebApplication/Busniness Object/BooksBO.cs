@@ -34,7 +34,7 @@ namespace Library_WebApplication.Busniness_Object
         }
         public async Task<Book> GetDetails(int id)
         {
-            var book = await _context.Books
+            var book = await _context.Books.Include(a=>a.Author).Include(p=>p.Pubblisher).Include(t=>t.Tipology)
                 .FirstOrDefaultAsync(m => m.Id == id);
             return book;
         }

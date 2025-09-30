@@ -1,0 +1,134 @@
+﻿@model IEnumerable<Library_WebApplication.Models.Author>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    Layout = "_DataLayout";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.25rem;
+        color: #343a40;
+    }
+
+    .page-subtitle {
+        font-size: 1rem;
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #565e64;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #b02a37;
+        }
+
+    .table {
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+            padding: 12px;
+        }
+
+        .table td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f5ff;
+            transition: 0.3s;
+        }
+
+    .actions a {
+        margin-right: 5px;
+    }
+</style>
+
+<h1 class="page-title">✍ Authors</h1>
+<p class="page-subtitle">Manage library authors information</p>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">➕ Create New Author</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+            <th>@Html.DisplayNameFor(model => model.LastName)</th>
+            <th>@Html.DisplayNameFor(model => model.DateOfBirth)</th>
+            <th>@Html.DisplayNameFor(model => model.DateOfDeath)</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => item.DateOfBirth)</td>
+                <td>
+                    @if (item.DateOfDeath == null)
+                    {
+                        <span class="badge bg-success">Alive</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.DateOfDeath)
+                    }
+                </td>
+                <td class="actions text-center">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">✏ Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">🔍 Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">🗑 Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,137 @@
+﻿@model Library_WebApplication.Models.Book
+
+@{
+    ViewData["Title"] = "Edit Book";
+}
+@{
+    Layout = "_DataLayout";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-container {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        max-width: 700px;
+        width: 100%;
+    }
+
+    .form-title {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #0d6efd;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+    }
+
+    .form-control {
+        border-radius: 6px;
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 8px 16px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #565e64;
+        }
+
+    .btn-container {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+</style>
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="form-container">
+        <h1 class="form-title">✏ Edit Book</h1>
+        <hr />
+
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="PublishingDate" class="control-label"></label>
+                <input asp-for="PublishingDate" class="form-control" />
+                <span asp-validation-for="PublishingDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="IdAuthor" class="control-label"></label>
+                <select asp-for="IdAuthor" class="form-control" asp-items="ViewBag.AuthorId"></select>
+                <span asp-validation-for="IdAuthor" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="IdPubblisher" class="control-label"></label>
+                <select asp-for="IdPubblisher" class="form-control" asp-items="ViewBag.PubblisherId"></select>
+                <span asp-validation-for="IdPubblisher" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="IdTipology" class="control-label"></label>
+                <select asp-for="IdTipology" class="form-control" asp-items="ViewBag.TipologyId"></select>
+                <span asp-validation-for="IdTipology" class="text-danger"></span>
+            </div>
+
+            <div class="btn-container">
+                <input type="submit" value="💾 Save" class="btn btn-primary w-50" />
+                <a asp-action="Index" class="btn btn-secondary w-50">⬅ Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

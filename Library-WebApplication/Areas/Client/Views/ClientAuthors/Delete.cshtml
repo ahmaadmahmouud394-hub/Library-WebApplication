@@ -1,0 +1,106 @@
+﻿@model Library_WebApplication.Models.Author
+
+@{
+    ViewData["Title"] = "Delete";
+}
+@{
+    Layout = "_DataLayout";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .delete-container {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .delete-title {
+        text-align: center;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #dc3545;
+        margin-bottom: 0.5rem;
+    }
+
+    .delete-subtitle {
+        text-align: center;
+        font-size: 1rem;
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+    }
+
+    dl {
+        margin-bottom: 1.5rem;
+    }
+
+    dt {
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    dd {
+        margin-bottom: 0.75rem;
+        color: #495057;
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 8px 16px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #b02a37;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background-color: #565e64;
+        }
+</style>
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="delete-container">
+        <h1 class="delete-title">⚠ Delete Author</h1>
+        <p class="delete-subtitle">Are you sure you want to permanently remove this author?</p>
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.FirstName)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.FirstName)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.LastName)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.LastName)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DateOfBirth)</dd>
+
+            <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateOfDeath)</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.DateOfDeath)</dd>
+        </dl>
+
+        <form asp-action="Delete" class="text-center">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger w-100 mb-2">🗑 Confirm Delete</button>
+            <a asp-action="Index" class="btn btn-secondary w-100">⬅ Back to List</a>
+        </form>
+    </div>
+</div>

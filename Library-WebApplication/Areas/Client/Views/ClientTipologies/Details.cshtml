@@ -1,0 +1,111 @@
+﻿@model Library_WebApplication.Models.Tipology
+
+@{
+    ViewData["Title"] = "Tipology Details";
+    Layout = "_DataLayout";
+}
+
+<style>
+    /* Container & Card */
+    .custom-container {
+        max-width: 600px;
+        margin: 50px auto;
+    }
+
+    .custom-card {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .custom-card:hover {
+            transform: translateY(-3px);
+        }
+
+    /* Header */
+    .custom-card-header {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+    }
+
+        .custom-card-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+    /* Body */
+    .custom-card-body {
+        padding: 25px;
+    }
+
+    /* Details list */
+    dl {
+        margin-bottom: 20px;
+    }
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd {
+        margin-bottom: 10px;
+    }
+
+    /* Buttons */
+    .custom-btn {
+        padding: 10px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-edit {
+        background: #007bff;
+        color: #fff;
+    }
+
+        .btn-edit:hover {
+            background: #0056b3;
+        }
+
+    .btn-back {
+        background: #6c757d;
+        color: #fff;
+    }
+
+        .btn-back:hover {
+            background: #5a6268;
+        }
+
+    /* Footer buttons layout */
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+    }
+</style>
+
+<div class="custom-container">
+    <div class="custom-card">
+        <div class="custom-card-header">
+            <h2>Tipology Details</h2>
+        </div>
+        <div class="custom-card-body">
+            <dl class="row">
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Name)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+            </dl>
+
+            <div class="action-buttons">
+                <a asp-action="Index" class="custom-btn btn-back">← Back to List</a>
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="custom-btn btn-edit">✏ Edit</a>
+            </div>
+        </div>
+    </div>
+</div>

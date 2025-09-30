@@ -1,0 +1,139 @@
+﻿@model IEnumerable<Library_WebApplication.Models.Tipology>
+
+@{
+    ViewData["Title"] = "Tipologies";
+    Layout = "_DataLayout";
+}
+
+<style>
+    /* Container */
+    .custom-container {
+        max-width: 900px;
+        margin: 50px auto;
+    }
+
+    /* Header */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .page-header h2 {
+            margin: 0;
+            font-weight: bold;
+            color: #333;
+        }
+
+    .btn-create {
+        background: #28a745;
+        color: #fff;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: 0.3s;
+        text-decoration: none;
+    }
+
+        .btn-create:hover {
+            background: #218838;
+        }
+
+    /* Table */
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+        .custom-table th {
+            background: #007bff;
+            color: #fff;
+            text-align: left;
+            padding: 12px;
+            font-weight: bold;
+        }
+
+        .custom-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .custom-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+    /* Action buttons */
+    .btn-action {
+        padding: 6px 15px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.3s;
+        margin-right: 5px;
+        display: inline-block;
+    }
+
+    .btn-edit {
+        background: #ffc107;
+        color: #212529;
+    }
+
+        .btn-edit:hover {
+            background: #e0a800;
+            color: #fff;
+        }
+
+    .btn-details {
+        background: #17a2b8;
+        color: #fff;
+    }
+
+        .btn-details:hover {
+            background: #117a8b;
+        }
+
+    .btn-delete {
+        background: #dc3545;
+        color: #fff;
+    }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+</style>
+
+<div class="custom-container">
+    <div class="page-header">
+        <h2>Tipologies</h2>
+        <a asp-action="Create" class="btn-create">+ Create New</a>
+    </div>
+
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th style="width: 250px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit">✏ Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn-action btn-details">🔍 Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-delete">🗑 Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

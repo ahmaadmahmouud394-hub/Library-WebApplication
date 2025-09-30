@@ -1,0 +1,143 @@
+﻿@model IEnumerable<Library_WebApplication.Models.Book>
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    Layout = "_DataLayout";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.25rem;
+        color: #343a40;
+    }
+
+    .page-subtitle {
+        font-size: 1rem;
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn {
+        border-radius: 6px;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .table {
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: 600;
+            padding: 12px;
+        }
+
+        .table td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f5ff;
+            transition: 0.3s;
+        }
+
+    .actions a {
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+
+    .badge {
+        padding: 0.4em 0.75em;
+        font-size: 0.8em;
+        border-radius: 12px;
+        font-weight: 500;
+    }
+
+    .bg-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .bg-success {
+        background-color: #28a745;
+        color: white;
+    }
+</style>
+
+<h1 class="page-title">📚 Books Dashboard</h1>
+<p class="page-subtitle">Manage your organization’s library efficiently</p>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">➕ Create New Book</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+            <th>@Html.DisplayNameFor(model => model.Tipology)</th>
+            <th>@Html.DisplayNameFor(model => model.Author)</th>
+            <th>@Html.DisplayNameFor(model => model.Price)</th>
+            <th>@Html.DisplayNameFor(model => model.Pubblisher)</th>
+            <th>@Html.DisplayNameFor(model => model.PublishingDate)</th>
+            <th>Status</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var isBorrowed = item.Invoices != null && item.Invoices.Any(b => b.DateOfTransaction == null);
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                <td>@Html.DisplayFor(modelItem => item.Tipology.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Author.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>@Html.DisplayFor(modelItem => item.Pubblisher.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.PublishingDate)</td>
+                <td>
+                    @if (isBorrowed)
+                    {
+                        <span class="badge bg-danger">Borrowed</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success">Available</span>
+                    }
+                </td>
+                <td class="actions text-center">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">✏ Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">🔍 Details</a>
+                    <a asp-action="Delete" asp-controller="Books" asp-route-id="@item.Id" class="btn btn-sm btn-danger">🗑 Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
