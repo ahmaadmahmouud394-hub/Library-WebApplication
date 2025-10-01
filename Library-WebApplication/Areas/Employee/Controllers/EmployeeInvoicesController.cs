@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Library_WebApplication.Busniness_Object;
+using Library_WebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Library_WebApplication.Models;
-using Library_WebApplication.Busniness_Object;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library_WebApplication.Controllers
 {
     [Area("Employee")]
+    [Authorize(Roles = "Employee")]
     public class EmployeeInvoicesController : Controller
     {
         private readonly AppDbContext _context;
@@ -21,7 +23,7 @@ namespace Library_WebApplication.Controllers
             _context = context;
             _invoicesBO = invoicesBO;
         }
-
+        [Route("Employee/Invoices")]
         // GET: Invoices
         public async Task<IActionResult> Index()
         {

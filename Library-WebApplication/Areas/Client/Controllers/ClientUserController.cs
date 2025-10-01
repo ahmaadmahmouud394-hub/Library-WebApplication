@@ -1,5 +1,6 @@
 ﻿using Library_WebApplication.Busniness_Object;
 using Library_WebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 namespace Library_WebApplication.Controllers
 {
     [Area("Client")]
+    [Authorize(Roles = "Client")]
     public class ClientUserController : Controller
     {
         private readonly AuthenticationBO _authBO;
@@ -19,7 +21,7 @@ namespace Library_WebApplication.Controllers
             _context = context;
             _userBO = userBO;
         }
-
+        [Route("Client/User")]
         public IActionResult Index()
         {
             return View();

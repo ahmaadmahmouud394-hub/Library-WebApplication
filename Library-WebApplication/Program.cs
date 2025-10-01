@@ -1,16 +1,61 @@
-using Library_WebApplication.Busniness_Object;
-using Library_WebApplication.Controllers;
+﻿using Library_WebApplication.Busniness_Object;
 using Library_WebApplication.Models;
 using Library_WebApplication.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// ✅ Database Context
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add services to the container.
+// ✅ JWT Authentication
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//    .AddCookie(options =>
+//    {
+//        options.LoginPath = "/User/Login";    // redirect if not logged in
+//        options.AccessDeniedPath = "/User/AccessDenied"; // redirect if no permission
+//        options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // token expiry
+//    });
+
+builder.Services.AddAuthorization(options =>
+{
+    // Admin only
+    options.AddPolicy("RequireAdmin", policy =>
+        policy.RequireRole("Admin"));
+
+    // Employee only
+    options.AddPolicy("RequireEmployee", policy =>
+        policy.RequireRole("Employee"));
+
+    // Client only
+    options.AddPolicy("RequireClient", policy =>
+        policy.RequireRole("Client"));
+
+    // Example: Admin OR Employee can access
+    options.AddPolicy("RequireAdminOrEmployee", policy =>
+        policy.RequireRole("Admin", "Employee"));
+});
+
+// ✅ MVC Controllers
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(o =>
+    {
+        o.LoginPath = "/User/Login";
+        o.AccessDeniedPath = "/User/AccessDenied";
+        o.SlidingExpiration = true;
+        o.ExpireTimeSpan = TimeSpan.FromDays(14);
+        o.Cookie.HttpOnly = true;
+        o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest; // Always in prod https
+    });
+
+// ✅ Dependency Injection
 builder.Services.AddScoped<AuthenticationBO>();
 builder.Services.AddScoped<BooksBO>();
 builder.Services.AddScoped<UserBO>();
@@ -20,15 +65,16 @@ builder.Services.AddScoped<TipologyBO>();
 builder.Services.AddScoped<InvoicesBO>();
 builder.Services.AddScoped<PubblisherBO>();
 builder.Services.AddScoped<AuthorBO>();
+builder.Services.AddScoped<JwtService>();
 
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ✅ Middleware pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -37,15 +83,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=User}/{action=Index}/{id?}"
-    );
-});
 
+// ✅ Route Configurations
+app.MapControllerRoute(
+    name: "Areas",
+    pattern: "{area:exists}/{controller=User}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

@@ -1,5 +1,6 @@
 ﻿using Library_WebApplication.Busniness_Object;
 using Library_WebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 namespace Library_WebApplication.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminUserController : Controller
     {
         private readonly AuthenticationBO _authBO;
@@ -20,7 +22,7 @@ namespace Library_WebApplication.Controllers
             _context = context;
             _userBO = userBO;
         }
-
+        [Route("Admin/User")]
         public IActionResult Index()
         {
             return View();

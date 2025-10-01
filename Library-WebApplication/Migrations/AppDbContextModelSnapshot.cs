@@ -117,6 +117,28 @@ namespace Library_WebApplication.Migrations
                     b.ToTable("Invoices");
                 });
 
+            modelBuilder.Entity("Library_WebApplication.Models.LoginResponseModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccessToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExpiresIn")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoginResponses");
+                });
+
             modelBuilder.Entity("Library_WebApplication.Models.Pubblisher", b =>
                 {
                     b.Property<int>("Id")

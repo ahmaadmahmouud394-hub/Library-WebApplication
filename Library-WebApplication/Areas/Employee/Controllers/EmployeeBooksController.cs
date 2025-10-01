@@ -1,5 +1,6 @@
 ﻿using Library_WebApplication.Busniness_Object;
 using Library_WebApplication.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Library_WebApplication.Controllers
 {
     [Area("Employee")]
+    [Authorize(Roles = "Employee")]
     public class EmployeeBooksController : Controller
     {
         private readonly AppDbContext _context;
