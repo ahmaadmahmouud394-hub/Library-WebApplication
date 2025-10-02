@@ -48,12 +48,12 @@ namespace Library_WebApplication.Controllers
             {
                 var claims = new List<Claim>
 
-{
-    new Claim(ClaimTypes.NameIdentifier, checkAuth.Id.ToString()),
-    new Claim(ClaimTypes.Name, $"{checkAuth.FirstName} {checkAuth.LastName}"),
-    new Claim(ClaimTypes.Email, checkAuth.Email),
-    new Claim(ClaimTypes.Role, checkAuth.Role.Name)
-};
+                {
+                    new Claim(ClaimTypes.NameIdentifier, checkAuth.Id.ToString()),
+                    new Claim(ClaimTypes.Name, $"{checkAuth.FirstName} {checkAuth.LastName}"),
+                    new Claim(ClaimTypes.Email, checkAuth.Email),
+                    new Claim(ClaimTypes.Role, checkAuth.Role.Name)
+                };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var principal = new ClaimsPrincipal(identity);

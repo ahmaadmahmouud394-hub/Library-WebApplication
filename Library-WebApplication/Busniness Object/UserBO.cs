@@ -1,6 +1,7 @@
 ﻿using Library_WebApplication.Models;
-using Microsoft.AspNetCore.Mvc;
 using Library_WebApplication.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library_WebApplication.Busniness_Object
 {
@@ -34,6 +35,12 @@ namespace Library_WebApplication.Busniness_Object
             _context.Update(user);
             _context.SaveChanges();
             return true;
+        }
+        public async Task<User> GetDetails(int id)
+        {
+            var user = await _context.User.Include(a => a.Role).Include(p => p.Invoices)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            return user;
         }
     }
 }

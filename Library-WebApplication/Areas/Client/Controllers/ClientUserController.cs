@@ -21,7 +21,7 @@ namespace Library_WebApplication.Controllers
             _context = context;
             _userBO = userBO;
         }
-        [Route("Client/User")]
+        [Route("Employee/User")]
         public IActionResult Index()
         {
             return View();
@@ -86,7 +86,11 @@ namespace Library_WebApplication.Controllers
 
             return View(await appDbContext.ToListAsync());
         }
-
+        public async Task<IActionResult> Details(int id)
+        {
+            var book = await _userBO.GetDetails(id);
+            return View(book);
+        }
 
     }
 }
