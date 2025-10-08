@@ -8,50 +8,56 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Login.styles.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        /* Classic Blue Theme - Library Management System */
+        /* Modern Library Management System Theme */
         :root {
-            --primary-blue: #1e3a8a;
+            --primary-gradient-start: #667eea;
+            --primary-gradient-end: #764ba2;
             --secondary-blue: #3b82f6;
-            --light-blue: #dbeafe;
-            --dark-blue: #1e40af;
-            --accent-blue: #60a5fa;
-            --text-dark: #1f2937;
-            --text-light: #6b7280;
-            --border-color: #e5e7eb;
-            --background-light: #f8fafc;
+            --light-purple: #f3f4f6;
+            --dark-text: #1f2937;
+            --medium-text: #6b7280;
+            --accent-color: #ffd814;
             --white: #ffffff;
-            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         html {
-            font-size: 14px;
-            position: relative;
-            min-height: 100%;
+            font-size: 16px;
+            scroll-behavior: smooth;
         }
-
 
         body {
-            margin-bottom: 60px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-light);
-            color: var(--text-dark);
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-text);
             line-height: 1.6;
+            min-height: 100vh;
         }
 
-        /* Header Styles */
+        /* Enhanced Header Styles */
         .site-header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
             box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
-
-        /* Remove logo-related styles */
 
         /* Navigation Styles */
         .main-navbar {
-            background-color: transparent !important;
-            padding: 1rem 0;
+            padding: 0.5rem 0;
         }
 
         .navbar-brand {
@@ -59,67 +65,171 @@
             font-size: 1.5rem;
             font-weight: 700;
             text-decoration: none;
-        }
-
-            .navbar-brand:hover {
-                color: var(--accent-blue) !important;
-            }
-
-        .navbar-nav .nav-link {
-            color: var(--white) !important;
-            font-weight: 500;
-            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             transition: all 0.3s ease;
-            border-radius: 0.5rem;
-            margin: 0 0.25rem;
-            position: relative;
         }
 
-            .navbar-nav .nav-link:hover {
-                background-color: rgba(255, 255, 255, 0.15);
+        .brand-icon {
+            font-size: 1.75rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @ExecuteAsync float {
+            0%, 100%
+
+        {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-5px);
+        }
+
+        }
+
+        .navbar-brand:hover {
+            transform: translateX(5px);
+            color: var(--accent-color) !important;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .brand-subtitle {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation Links */
+        .navbar-nav {
+            gap: 0.5rem;
+        }
+
+            .navbar-nav .nav-link {
                 color: var(--white) !important;
-                transform: translateY(-1px);
+                font-weight: 500;
+                padding: 0.75rem 1.25rem;
+                transition: all 0.3s ease;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                position: relative;
+                overflow: hidden;
             }
 
-            .navbar-nav .nav-link:active,
-            .navbar-nav .nav-link.active {
-                background-color: rgba(255, 255, 255, 0.2);
-            }
+                .navbar-nav .nav-link::before {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    width: 0;
+                    height: 2px;
+                    background: var(--accent-color);
+                    transition: all 0.3s ease;
+                    transform: translateX(-50%);
+                }
+
+                .navbar-nav .nav-link:hover::before {
+                    width: 80%;
+                }
+
+                .navbar-nav .nav-link:hover {
+                    background: rgba(255, 255, 255, 0.15);
+                    transform: translateY(-2px);
+                }
+
+                .navbar-nav .nav-link.active {
+                    background: rgba(255, 255, 255, 0.2);
+                    box-shadow: var(--shadow-md);
+                }
+
+        .nav-icon {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover .nav-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
 
         /* Dropdown Styles */
         .dropdown-menu {
-            background-color: var(--white);
+            background: var(--white);
             border: none;
-            border-radius: 0.75rem;
-            box-shadow: var(--shadow-lg);
-            padding: 0.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            padding: 0.75rem;
             margin-top: 0.5rem;
+            animation: dropdownFade 0.3s ease;
+        }
+
+        @ExecuteAsync dropdownFade {
+            from
+
+        {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         }
 
         .dropdown-item {
-            color: var(--text-dark);
+            color: var(--dark-text);
             font-weight: 500;
             padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
+            border-radius: 8px;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
             .dropdown-item:hover {
-                background-color: var(--light-blue);
-                color: var(--primary-blue);
+                background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+                color: var(--white);
+                transform: translateX(5px);
+            }
+
+            .dropdown-item i {
+                width: 20px;
+                text-align: center;
             }
 
         .dropdown-divider {
-            border-color: var(--border-color);
+            border-color: #e5e7eb;
             margin: 0.5rem 0;
         }
 
-        /* Responsive navbar toggler */
+        /* Mobile Toggle Button */
         .navbar-toggler {
             border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 0.5rem;
+            border-radius: 10px;
             padding: 0.5rem 0.75rem;
+            transition: all 0.3s ease;
         }
+
+            .navbar-toggler:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: var(--white);
+            }
 
             .navbar-toggler:focus {
                 box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
@@ -129,75 +239,261 @@
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
-        /* Main content styling */
+        /* Main Content */
         .main-content {
-            background-color: var(--white);
-            min-height: calc(100vh - 200px);
-            border-radius: 1rem 1rem 0 0;
-            margin-top: 1rem;
-            box-shadow: var(--shadow);
+            background: var(--white);
+            min-height: calc(100vh - 100px);
+            border-radius: 20px 20px 0 0;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-xl);
+            padding: 2rem;
         }
 
-        /* Mobile responsiveness */
-      
+        /* Search Bar Enhancement */
+        .search-container {
+            position: relative;
+            max-width: 300px;
         }
-        .navbar-collapse {
-            background-color: rgba(0, 0, 0, 0.1);
-            border-radius: 0.75rem;
+
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+            .search-input:focus {
+                outline: none;
+                background: var(--white);
+                color: var(--dark-text);
+                border-color: var(--accent-color);
+            }
+
+            .search-input::placeholder {
+                color: rgba(255, 255, 255, 0.7);
+            }
+
+            .search-input:focus::placeholder {
+                color: var(--medium-text);
+            }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+        }
+
+        .search-input:focus ~ .search-icon {
+            color: var(--dark-text);
+        }
+
+        /* User Profile Section */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .user-profile:hover {
+                background: rgba(255, 255, 255, 0.25);
+            }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .user-name {
+            color: var(--white);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* Mobile Responsiveness */
+        @Url (max-width: 991px) {
+            .navbar-collapse
+
+        {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-nav {
+            gap: 0.25rem;
+        }
+
+        .search-container {
+            max-width: 100%;
+            margin: 1rem 0;
+        }
+
+        .user-profile {
+            margin-top: 0.5rem;
+        }
+
+        .brand-text {
+            display: none;
+        }
+
+        .navbar-brand {
+            font-size: 1.25rem;
+        }
+
+        }
+
+        @Url (max-width: 576px) {
+            .main-content
+
+        {
             padding: 1rem;
             margin-top: 1rem;
         }
 
+        .brand-subtitle {
+            display: none;
         }
 
-     
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
+            border-radius: 5px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: var(--primary-gradient-end);
+            }
     </style>
 </head>
 <body>
     <header class="site-header">
         <div class="container-fluid">
-            <!-- Horizontal Navigation -->
             <nav class="navbar navbar-expand-lg main-navbar">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="@Url.Action("Index", "Books")">Library Management System</a>
+                    <!-- Enhanced Brand Logo -->
+                    <a class="navbar-brand" href="@Url.Action("Index", "Books")">
+                        <span class="brand-icon">📚</span>
+                        <span class="brand-text">
+                            <span class="brand-title">Library Station!</span>
+                            <span class="brand-subtitle">Choose Your Prefferred Book!</span>
+                        </span>
+                    </a>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav ms-auto">
-                            <!-- Client -->
+
+                        <ul class="navbar-nav ms-auto align-items-lg-center">
+                            <!-- All Books -->
                             <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Details", "User")">
-                                    <i class="fas fa-users me-2"></i>Users
+                                <a class="nav-link" href="@Url.Action("Index", "Books")">
+                                    <i class="fas fa-book nav-icon"></i>
+                                    <span>All Books</span>
                                 </a>
                             </li>
 
-                            <!-- Book Dropdown -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-book me-2"></i>Book
+                            <!-- My Profile -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "User")">
+                                    <i class="fas fa-user-circle nav-icon"></i>
+                                    <span>My Profile</span>
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="@Url.Action("Index", "Authors")"><i class="fas fa-pen-fancy me-2"></i>Author</a></li>
+                            </li>
+
+                            <!-- Contact Us -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("ContactUs", "User")">
+                                    <i class="fas fa-envelope nav-icon"></i>
+                                    <span>Contact</span>
+                                </a>
+                            </li>
+
+                            <!-- User Dropdown (Optional) -->
+                            <li class="nav-item dropdown d-none d-lg-block">
+                                <a class="nav-link dropdown-toggle user-profile" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="user-avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span class="user-name">Account</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "User")">
+                                            <i class="fas fa-user"></i>
+                                            My Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-book-reader"></i>
+                                            My Books
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-history"></i>
+                                            History
+                                        </a>
+                                    </li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("Index", "Tipologies")"><i class="fas fa-tags me-2"></i>Tipology</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("Index", "Pubblishers")"><i class="fas fa-building me-2"></i>Pubblisher</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("Index", "Invoices")"><i class="fas fa-book-open me-2"></i>Invoices</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("Index", "Books")"><i class="fas fa-book-open me-2"></i>All Books</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-cog"></i>
+                                            Settings
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            Logout
+                                        </a>
+                                    </li>
                                 </ul>
-                            </li>
-                            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-                            <!-- Contact (Optional - keeping from original) -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Contact", "Home")">
-                                    <i class="fas fa-envelope me-2"></i>Contact
-                                </a>
                             </li>
                         </ul>
                     </div>
@@ -208,7 +504,7 @@
 
     <!-- Main Content -->
     <div class="container">
-        <main role="main" class="main-content p-4 w-auto mx-auto">
+        <main role="main" class="main-content">
             @RenderBody()
         </main>
     </div>
@@ -216,7 +512,7 @@
     <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Scripts", required: false)

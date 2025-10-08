@@ -17,8 +17,20 @@ namespace Library_WebApplication.Busniness_Object
         }
         public bool GetSignedUp(User user)
         {
-            if (user != null) { user.IdRole = 1; user.Password = _encryption.Encrypt(user.Password); _context.Add(user); _context.SaveChanges(); return true; }
-            else { return false; }
+            try
+            {
+
+                    user.IdRole = 1;
+                    user.Password = _encryption.Encrypt(user.Password);
+                    _context.Add(user);
+                    _context.SaveChanges();
+                    return true;
+                
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         public bool GetCreated(User user)
         {

@@ -30,5 +30,10 @@ namespace Library_WebApplication.Models
         [Required]
         public double Price { get; set; }
         public ICollection<Invoice> Invoices { get; set; }
+        [Required]
+        public int count { get; set; }
+
+        [Required]
+        public string ?ImageUrl { get; set; }
     }
 }

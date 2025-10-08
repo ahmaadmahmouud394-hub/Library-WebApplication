@@ -1,0 +1,455 @@
+﻿@model Library_WebApplication.Models.User
+@{
+    ViewData["Title"] = "User Profile";
+}
+@{
+    Layout = "_DataLayout";
+}
+<style>
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: 'Amazon Ember', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+    }
+
+    .profile-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 150px);
+        padding: 2rem 1rem;
+    }
+
+    .profile-container {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 900px;
+        width: 100%;
+        overflow: hidden;
+        animation: fadeInUp 0.5s ease;
+    }
+
+    @ExecuteAsync fadeInUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    .profile-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+    @ExecuteAsync rotate {
+        from
+
+    {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+    }
+
+    .profile-avatar-wrapper {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 1rem;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffd814 0%, #ffb700 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        border: 5px solid white;
+        font-size: 3rem;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @ExecuteAsync float {
+        0%, 100%
+
+    {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    }
+
+    .profile-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    .profile-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-top: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .profile-content {
+        padding: 2.5rem;
+    }
+
+    .info-section {
+        margin-bottom: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #667eea;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #e7e7e7;
+    }
+
+    .section-icon {
+        font-size: 1.5rem;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .info-card {
+        background: #f8f9fa;
+        border: 2px solid #e7e7e7;
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+            transform: translateX(5px);
+        }
+
+            .info-card:hover::before {
+                transform: scaleY(1);
+            }
+
+    .info-label {
+        font-size: 0.85rem;
+        color: #767676;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .info-icon {
+        font-size: 1rem;
+        color: #667eea;
+    }
+
+    .info-value {
+        font-size: 1.15rem;
+        color: #0f1111;
+        font-weight: 600;
+        word-break: break-word;
+    }
+
+    .stats-section {
+        background: linear-gradient(135deg, #e0e7ff 0%, #f5f3ff 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .stat-item {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+    .stat-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #667eea;
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: #767676;
+        margin-top: 0.5rem;
+        font-weight: 500;
+    }
+
+    .action-section {
+        display: flex;
+        gap: 1rem;
+        padding-top: 2rem;
+        border-top: 2px solid #e7e7e7;
+    }
+
+    .btn {
+        border-radius: 10px;
+        padding: 14px 24px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex: 1;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+        .btn-edit:hover {
+            background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+    .btn-back {
+        background: #f0f2f2;
+        color: #333;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .btn-back:hover {
+            background: #e0e2e2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: #333;
+        }
+
+    .badge-role {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: linear-gradient(135deg, #ffd814 0%, #ffb700 100%);
+        color: #0f1111;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+
+    @Url (max-width: 768px) {
+        .info-grid
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .action-section {
+        flex-direction: column;
+    }
+
+    .profile-title {
+        font-size: 1.5rem;
+    }
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+        font-size: 2.5rem;
+    }
+
+    }
+
+    @Url (max-width: 480px) {
+        .stats-grid
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    }
+</style>
+
+<div class="profile-wrapper">
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar-wrapper">
+                <div class="profile-avatar">
+                    <span>👤</span>
+                </div>
+            </div>
+            <h1 class="profile-title">@Model.FirstName @Model.LastName</h1>
+            <p class="profile-subtitle">@@@Model.UserName</p>
+        </div>
+
+        <div class="profile-content">
+            <!-- Statistics Section -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Books Bought</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Active Loans</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Information Section -->
+            <div class="info-section">
+                <div class="section-title">
+                    <span class="section-icon">👤</span>
+                    <span>Personal Information</span>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">
+                            <span class="info-icon">✉️</span>
+                            Email Address
+                        </div>
+                        <div class="info-value">@Model.Email</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">
+                            <span class="info-icon">🎂</span>
+                            Date of Birth
+                        </div>
+                        <div class="info-value">@Model.DateOfBirth.ToString("MMMM dd, yyyy")</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Information Section -->
+            <div class="info-section">
+                <div class="section-title">
+                    <span class="section-icon">🔐</span>
+                    <span>Account Information</span>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">
+                            <span class="info-icon">👨</span>
+                            First Name
+                        </div>
+                        <div class="info-value">@Model.FirstName</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">
+                            <span class="info-icon">👨</span>
+                            Last Name
+                        </div>
+                        <div class="info-value">@Model.LastName</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">
+                            <span class="info-icon">🆔</span>
+                            Username
+                        </div>
+                        <div class="info-value">@Model.UserName</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-section">
+                <a asp-action="Edit" asp-controller ="Users" asp-route-id="@Model?.Id" class="btn btn-edit">
+                    ✏️ Edit Profile
+                </a>
+                <a asp-action="Index" asp-controller="Books" class="btn btn-back">
+                    ← Back to Books
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

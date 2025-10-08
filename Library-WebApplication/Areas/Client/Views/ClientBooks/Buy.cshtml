@@ -1,0 +1,387 @@
+﻿@model Library_WebApplication.Models.Book
+@{
+    ViewData["Title"] = "Buy Book";
+}
+@{
+    Layout = "_DataLayout";
+}
+<style>
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: 'Amazon Ember', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+    }
+
+    .buy-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 2rem 1rem;
+    }
+
+    .buy-container {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 900px;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .buy-header {
+        background: linear-gradient(135deg, #ffd814 0%, #ffb700 100%);
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .buy-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        animation: pulse 2s infinite;
+    }
+
+    @ExecuteAsync pulse {
+        0%, 100%
+
+    {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    }
+
+    .buy-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #0f1111;
+        margin-bottom: 0.5rem;
+    }
+
+    .buy-subtitle {
+        font-size: 1.1rem;
+        color: #565959;
+    }
+
+    .buy-content {
+        padding: 2.5rem;
+    }
+
+    .product-showcase {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid #e7e7e7;
+    }
+
+    .product-image-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #e0e7ff 0%, #f5f3ff 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        min-height: 250px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .product-image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 1rem;
+        }
+
+    .product-placeholder {
+        font-size: 8rem;
+        color: #667eea;
+        opacity: 0.3;
+    }
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .product-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #0066c0;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+    }
+
+    .product-description {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-meta-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .meta-item {
+        background: #f7f7f7;
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+    }
+
+    .meta-label {
+        font-size: 0.85rem;
+        color: #767676;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+        font-weight: 600;
+    }
+
+    .meta-value {
+        font-size: 1.1rem;
+        color: #0f1111;
+        font-weight: 500;
+    }
+
+    .price-highlight {
+        background: linear-gradient(135deg, #f0f2f2 0%, #ffffff 100%);
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        margin: 1.5rem auto;
+        border: 2px dashed #667eea;
+        text-align: center;
+        max-width: 300px;
+    }
+
+    .price-label {
+        font-size: 0.8rem;
+        color: #767676;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+
+    .price-display {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 0.25rem;
+    }
+
+    .currency {
+        font-size: 1rem;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .price-amount {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: #B12704;
+        line-height: 1;
+    }
+
+    .price-decimal {
+        font-size: 1.25rem;
+        color: #B12704;
+        font-weight: 700;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        border-radius: 10px;
+        padding: 14px 24px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex: 1;
+    }
+
+    .btn-confirm {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+        .btn-confirm:hover {
+            background: linear-gradient(135deg, #218838 0%, #1ba87d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+        }
+
+    .btn-cancel {
+        background: #f0f2f2;
+        color: #333;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .btn-cancel:hover {
+            background: #e0e2e2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    .info-notice {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-notice-text {
+        color: #856404;
+        font-size: 0.95rem;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    @ExecuteAsync (max-width: 768px) {
+        .product-showcase
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .product-meta-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .buy-title {
+        font-size: 1.5rem;
+    }
+
+    .price-amount {
+        font-size: 2rem;
+    }
+
+    .price-highlight {
+        max-width: 100%;
+    }
+
+    }
+</style>
+
+<div class="buy-wrapper">
+    <div class="buy-container">
+        <div class="buy-header">
+            <div class="buy-icon">🛒</div>
+            <h1 class="buy-title">Complete Your Purchase</h1>
+            <p class="buy-subtitle">Review the details below before confirming</p>
+        </div>
+
+        <div class="buy-content">
+            <div class="info-notice">
+                <p class="info-notice-text">
+                    ⚠️ Please review all book details carefully. Once confirmed, this purchase will be processed and added to your library.
+                </p>
+            </div>
+
+            <div class="product-showcase">
+                <div class="product-image-section">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" alt="@Model.Name" />
+                    }
+                    else
+                    {
+                        <div class="product-placeholder">📖</div>
+                    }
+                </div>
+
+                <div class="product-info">
+                    <h2 class="product-title">@Model.Name</h2>
+
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <p class="product-description">@Model.Description</p>
+                    }
+                </div>
+            </div>
+
+            <div class="product-meta-grid">
+                @if (Model.Author != null)
+                {
+                    <div class="meta-item">
+                        <div class="meta-label">Author</div>
+                        <div class="meta-value">@Model.Author.FirstName</div>
+                    </div>
+                }
+
+                @if (Model.Pubblisher != null)
+                {
+                    <div class="meta-item">
+                        <div class="meta-label">Publisher</div>
+                        <div class="meta-value">@Model.Pubblisher.Name</div>
+                    </div>
+                }
+
+                @if (Model.Tipology != null)
+                {
+                    <div class="meta-item">
+                        <div class="meta-label">Category</div>
+                        <div class="meta-value">@Model.Tipology.Name</div>
+                    </div>
+                }
+
+                <div class="meta-item">
+                    <div class="meta-label">Publishing Date</div>
+                    <div class="meta-value">@Model.PublishingDate.ToString("MMM dd, yyyy")</div>
+                </div>
+            </div>
+
+            <div class="price-highlight">
+                <div class="price-label">Total Amount</div>
+                <div class="price-display">
+                    <span class="currency">EGP</span>
+                    <span class="price-amount">@Math.Floor(Model.Price)</span>
+                    <span class="price-decimal">@((Model.Price - Math.Floor(Model.Price)).ToString("F2").Substring(1))</span>
+                </div>
+            </div>
+
+            <form asp-action="BuyConfirmed" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-confirm">
+                        ✅ Confirm Purchase
+                    </button>
+                    <a asp-action="Index" class="btn btn-cancel">
+                        ← Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

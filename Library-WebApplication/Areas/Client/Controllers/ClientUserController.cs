@@ -21,8 +21,18 @@ namespace Library_WebApplication.Controllers
             _context = context;
             _userBO = userBO;
         }
-        [Route("Employee/User")]
-        public IActionResult Index()
+
+        [Route("Client")]
+        public async Task< IActionResult> Index()
+        {
+            var session = HttpContext.Session.GetString("UserId");
+            int ParsedSession;
+            Int32.TryParse(session, out ParsedSession);
+            var Profile = _userBO.FindUser(ParsedSession);
+            return View(await Profile);
+        }
+        [Route("Client/User/ContactUs")]
+        public IActionResult ContactUs()
         {
             return View();
         }

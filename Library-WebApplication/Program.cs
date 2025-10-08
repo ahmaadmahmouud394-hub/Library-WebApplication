@@ -1,4 +1,5 @@
 ﻿using Library_WebApplication.Busniness_Object;
+using Library_WebApplication.Middleware;
 using Library_WebApplication.Models;
 using Library_WebApplication.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -9,18 +10,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Database Context
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ✅ JWT Authentication
-//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-//    .AddCookie(options =>
-//    {
-//        options.LoginPath = "/User/Login";    // redirect if not logged in
-//        options.AccessDeniedPath = "/User/AccessDenied"; // redirect if no permission
-//        options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // token expiry
-//    });
 
 builder.Services.AddAuthorization(options =>
 {
@@ -39,6 +32,12 @@ builder.Services.AddAuthorization(options =>
     // Example: Admin OR Employee can access
     options.AddPolicy("RequireAdminOrEmployee", policy =>
         policy.RequireRole("Admin", "Employee"));
+});
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(60); // Set session timeout
+    options.Cookie.HttpOnly = true; // Make the session cookie HTTP-only
+    options.Cookie.IsEssential = true; // Mark the session cookie as essential
 });
 
 // ✅ MVC Controllers
@@ -79,10 +78,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseSession();
 app.UseStaticFiles();
-
 app.UseRouting();
-
+app.UseMiddleware<SessionValidationMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

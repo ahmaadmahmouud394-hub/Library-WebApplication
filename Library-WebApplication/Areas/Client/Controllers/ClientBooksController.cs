@@ -13,11 +13,13 @@ namespace Library_WebApplication.Controllers
     {
         private readonly AppDbContext _context;
         private readonly BooksBO _booksBO;
+        private readonly UserBO _userBO;
 
-        public ClientBooksController(AppDbContext context, BooksBO booksbo)
+        public ClientBooksController(AppDbContext context, BooksBO booksbo, UserBO userBO)
         {
             _context = context;
             _booksBO = booksbo;
+            _userBO = userBO;
         }
         [Route("Client/Books")]
         public async Task<IActionResult> Index()
@@ -63,6 +65,36 @@ namespace Library_WebApplication.Controllers
 
             return View(await book);
         }
+        public async Task<IActionResult>  Buy(int id)
+        {
+
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var book = _booksBO.GetBookById((int)id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            return View(await book);
+        }
+        [HttpPost, ActionName("BuyConfirmed")]
+        public async Task<IActionResult> BuyConfirmed(int id)
+        {
+            string session = HttpContext.Session.GetString("UserId").ToString();
+            int parsedsession;
+            Int32.TryParse(session, out parsedsession);
+            var user = _userBO.FindUser(parsedsession);
+
+            _booksBO.GetBought(id,await user);
+            return RedirectToAction("Index","Books");
+        }
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -20,6 +20,7 @@
         box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
         max-width: 700px;
         width: 100%;
+        margin-top: auto;
     }
 
     .form-title {
@@ -76,59 +77,65 @@
         <h1 class="form-title">✏ Edit Book</h1>
         <hr />
 
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-            <input type="hidden" asp-for="Id" />
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Id" />
 
-            <div class="form-group mb-3">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="PublishingDate" class="control-label"></label>
-                <input asp-for="PublishingDate" class="form-control" />
-                <span asp-validation-for="PublishingDate" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="PublishingDate" class="control-label"></label>
+                        <input asp-for="PublishingDate" class="form-control" />
+                        <span asp-validation-for="PublishingDate" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="IdAuthor" class="control-label"></label>
-                <select asp-for="IdAuthor" class="form-control" asp-items="ViewBag.AuthorId"></select>
-                <span asp-validation-for="IdAuthor" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="IdAuthor" class="control-label"></label>
+                        <select asp-for="IdAuthor" class="form-control" asp-items="ViewBag.AuthorId"></select>
+                        <span asp-validation-for="IdAuthor" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="IdPubblisher" class="control-label"></label>
-                <select asp-for="IdPubblisher" class="form-control" asp-items="ViewBag.PubblisherId"></select>
-                <span asp-validation-for="IdPubblisher" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="IdPubblisher" class="control-label"></label>
+                        <select asp-for="IdPubblisher" class="form-control" asp-items="ViewBag.PubblisherId"></select>
+                        <span asp-validation-for="IdPubblisher" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group mb-4">
-                <label asp-for="IdTipology" class="control-label"></label>
-                <select asp-for="IdTipology" class="form-control" asp-items="ViewBag.TipologyId"></select>
-                <span asp-validation-for="IdTipology" class="text-danger"></span>
-            </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="IdTipology" class="control-label"></label>
+                        <select asp-for="IdTipology" class="form-control" asp-items="ViewBag.TipologyId"></select>
+                        <span asp-validation-for="IdTipology" class="text-danger"></span>
+                    </div>
 
-            <div class="btn-container">
-                <input type="submit" value="💾 Save" class="btn btn-primary w-50" />
-                <a asp-action="Index" class="btn btn-secondary w-50">⬅ Back to List</a>
+                    <div>
+                        <img class="card-img" src="" alt="Book Profile" id="book-pic" />
+                        <label for="CoverFile">Add Image</label>
+                        <input type="file" name="CoverFile" accept="image/jpeg, image/png, image/jpg" id="input-file" multiple />
+                    </div>
+
+                    <div class="btn-container">
+                        <input type="submit" value="💾 Save" class="btn btn-primary w-50" />
+                        <a asp-action="Index" class="btn btn-secondary w-50">⬅ Back to List</a>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
 
 @section Scripts {
     @{

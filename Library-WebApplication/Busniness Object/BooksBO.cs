@@ -13,8 +13,9 @@ namespace Library_WebApplication.Busniness_Object
         {
             _context = context;
         }
-        public bool GetCreated([Bind("Id,IdAuthor, IdPubblisher, IdTipology, Name, Description, PubblishingDate, Price")] Book book)
+        public bool GetCreated([Bind("Id,IdAuthor, IdPubblisher, IdTipology, Name, Description, PubblishingDate, Price, ImageUrl")] Book book)
         {
+            
             if (book != null) 
             { 
                 _context.Add(book);
@@ -27,6 +28,7 @@ namespace Library_WebApplication.Busniness_Object
             }
 
         }
+
         public IQueryable<Book> GetAllBooks()
         {
             var books = _context.Books;
@@ -62,6 +64,29 @@ namespace Library_WebApplication.Busniness_Object
             if (book != null)
             {
                 _context.Books.Remove(book);
+                _context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public bool GetBought(int id ,User? user)
+        {
+            var book = _context.Books.Find(id);
+            if (book != null&& user!=null)
+            {
+                var invoice = new Invoice()
+                {
+                    IdBook = book.Id,
+                    IdUser = user.Id,
+                    DateOfTransaction = DateTime.Now,
+                };
+                _context.Add(invoice);
+                book.count = book.count - 1;
+                _context.Update(book);
                 _context.SaveChanges();
                 return true;
             }

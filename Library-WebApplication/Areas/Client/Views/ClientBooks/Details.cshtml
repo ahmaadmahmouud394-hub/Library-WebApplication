@@ -1,112 +1,512 @@
 ﻿@model Library_WebApplication.Models.Book
-
 @{
     ViewData["Title"] = "Book Details";
 }
 @{
     Layout = "_DataLayout";
 }
-
 <style>
     body {
-        background-color: #f8f9fa;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: 'Amazon Ember', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+    }
+
+    .details-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 150px);
+        padding: 2rem 1rem;
     }
 
     .details-container {
         background: #fff;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
-        max-width: 750px;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        max-width: 1000px;
         width: 100%;
+        overflow: hidden;
+        animation: fadeInUp 0.5s ease;
+    }
+
+    @ExecuteAsync fadeInUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    .details-header {
+        background: linear-gradient(135deg, #0066c0 0%, #004080 100%);
+        padding: 2rem;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .details-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+    @ExecuteAsync rotate {
+        from
+
+    {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+    }
+
+    .details-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+        animation: bounce 2s ease-in-out infinite;
+    }
+
+    @ExecuteAsync bounce {
+        0%, 100%
+
+    {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
     }
 
     .details-title {
-        text-align: center;
         font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    .details-content {
+        padding: 2.5rem;
+    }
+
+    .book-showcase {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 2.5rem;
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid #e7e7e7;
+    }
+
+    .book-image-large {
+        background: linear-gradient(135deg, #e0e7ff 0%, #f5f3ff 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .product-image-section {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .product-image-section img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+    .product-placeholder {
+        font-size: 10rem;
+        color: #667eea;
+        opacity: 0.3;
+    }
+
+    .book-placeholder-large {
+        font-size: 10rem;
+        color: #667eea;
+        opacity: 0.3;
+    }
+
+    .stock-indicator {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 25px;
         font-weight: 600;
-        color: #0d6efd;
-        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 2;
     }
 
-    dl.row {
-        margin-bottom: 1.5rem;
+    .stock-available {
+        background-color: #28a745;
+        color: white;
     }
 
-    dt {
-        font-weight: 600;
-        color: #495057;
+    .stock-out {
+        background-color: #dc3545;
+        color: white;
     }
 
-    dd {
+    .book-details-main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .book-name {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #0066c0;
         margin-bottom: 1rem;
-        color: #212529;
+        line-height: 1.3;
+    }
+
+    .book-author-info {
+        font-size: 1.1rem;
+        color: #565959;
+        margin-bottom: 0.5rem;
+    }
+
+    .author-link {
+        color: #007185;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        .author-link:hover {
+            color: #C7511F;
+            text-decoration: underline;
+        }
+
+    .book-description-section {
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        background: #f7f7f7;
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+    }
+
+    .description-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #767676;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.75rem;
+    }
+
+    .description-text {
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.7;
+    }
+
+    .price-section {
+        background: linear-gradient(135deg, #fff3cd 0%, #fff8dc 100%);
+        padding: 1.5rem 2rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        border: 2px solid #ffc107;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .price-label-main {
+        font-size: 1rem;
+        color: #856404;
+        font-weight: 600;
+    }
+
+    .price-value {
+        display: flex;
+        align-items: baseline;
+        gap: 0.25rem;
+    }
+
+    .price-currency {
+        font-size: 1.25rem;
+        color: #B12704;
+        font-weight: 600;
+    }
+
+    .price-main {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #B12704;
+        line-height: 1;
+    }
+
+    .price-decimal-main {
+        font-size: 1.25rem;
+        color: #B12704;
+        font-weight: 700;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .detail-card {
+        background: #ffffff;
+        border: 2px solid #e7e7e7;
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+        .detail-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+    .detail-icon {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .detail-label {
+        font-size: 0.85rem;
+        color: #767676;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .detail-value {
+        font-size: 1.15rem;
+        color: #0f1111;
+        font-weight: 600;
+    }
+
+    .action-section {
+        display: flex;
+        gap: 1rem;
+        padding-top: 2rem;
+        border-top: 2px solid #e7e7e7;
     }
 
     .btn {
-        border-radius: 6px;
-        padding: 8px 16px;
-        font-size: 0.95rem;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .btn-primary {
-        background-color: #0d6efd;
+        border-radius: 10px;
+        padding: 14px 24px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
         border: none;
-    }
-
-        .btn-primary:hover {
-            background-color: #0b5ed7;
-        }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        border: none;
-    }
-
-        .btn-secondary:hover {
-            background-color: #565e64;
-        }
-
-    .btn-container {
-        display: flex;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
+        gap: 0.5rem;
+        flex: 1;
+    }
+
+    .btn-buy {
+        background: linear-gradient(135deg, #ffd814 0%, #ffb700 100%);
+        color: #0f1111;
+        box-shadow: 0 4px 12px rgba(255, 183, 0, 0.3);
+    }
+
+        .btn-buy:hover {
+            background: linear-gradient(135deg, #f7ca00 0%, #f0a800 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 183, 0, 0.4);
+        }
+
+    .btn-back {
+        background: #f0f2f2;
+        color: #333;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .btn-back:hover {
+            background: #e0e2e2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+    @ExecuteAsync (max-width: 768px) {
+        .book-showcase
+
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .book-image-large {
+        min-height: 300px;
+    }
+
+    .book-placeholder-large,
+    .product-placeholder {
+        font-size: 8rem;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-section {
+        flex-direction: column;
+    }
+
+    .book-name {
+        font-size: 1.5rem;
+    }
+
+    .price-section {
+        flex-direction: column;
+        text-align: center;
         gap: 1rem;
+    }
+
     }
 </style>
 
-<div class="d-flex justify-content-center align-items-center vh-100">
+<div class="details-wrapper">
     <div class="details-container">
-        <h1 class="details-title">📖 Book Details</h1>
-        <hr />
+        <div class="details-header">
+            <div class="details-icon">📚</div>
+            <h1 class="details-title">Book Details</h1>
+        </div>
 
-        <dl class="row">
-            <dt class="col-sm-3">Author</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.Author.FirstName)</dd>
+        <div class="details-content">
+            <div class="book-showcase">
+                <div class="book-image-large">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <div class="product-image-section">
+                            <img src="@Model.ImageUrl" alt="@Model.Name" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="product-placeholder">📖</div>
+                    }
 
-            <dt class="col-sm-3">Publisher</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.Pubblisher.Name)</dd>
+                    @if (Model.count > 0)
+                    {
+                        <span class="stock-indicator stock-available">In Stock: @Model.count</span>
+                    }
+                    else
+                    {
+                        <span class="stock-indicator stock-out">Out of Stock</span>
+                    }
+                </div>
 
-            <dt class="col-sm-3">Tipology</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.Tipology.Name)</dd>
+                <div class="book-details-main">
+                    <h2 class="book-name">@Model.Name</h2>
 
-            <dt class="col-sm-3">Title</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.Name)</dd>
+                    @if (Model.Author != null)
+                    {
+                        <div class="book-author-info">
+                            by <span class="author-link">@Model.Author.FirstName</span>
+                        </div>
+                    }
 
-            <dt class="col-sm-3">Description</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <div class="book-description-section">
+                            <div class="description-label">Description</div>
+                            <div class="description-text">@Model.Description</div>
+                        </div>
+                    }
 
-            <dt class="col-sm-3">Publishing Date</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.PublishingDate)</dd>
+                    <div class="price-section">
+                        <div class="price-label-main">Price:</div>
+                        <div class="price-value">
+                            <span class="price-currency">EUR</span>
+                            <span class="price-main">@Math.Floor(Model.Price)</span>
+                            <span class="price-decimal-main">@((Model.Price - Math.Floor(Model.Price)).ToString("F2").Substring(1))</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <dt class="col-sm-3">Price</dt>
-            <dd class="col-sm-9">@Html.DisplayFor(model => model.Price)</dd>
-        </dl>
+            <div class="details-grid">
+                @if (Model.Pubblisher != null)
+                {
+                    <div class="detail-card">
+                        <div class="detail-icon">🏢</div>
+                        <div class="detail-label">Publisher</div>
+                        <div class="detail-value">@Model.Pubblisher.Name</div>
+                    </div>
+                }
 
-        <div class="btn-container mt-3">
-            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">✏ Edit</a>
-            <a asp-action="Index" class="btn btn-secondary">⬅ Back to List</a>
+                @if (Model.Tipology != null)
+                {
+                    <div class="detail-card">
+                        <div class="detail-icon">📑</div>
+                        <div class="detail-label">Category</div>
+                        <div class="detail-value">@Model.Tipology.Name</div>
+                    </div>
+                }
+
+                <div class="detail-card">
+                    <div class="detail-icon">📅</div>
+                    <div class="detail-label">Publishing Date</div>
+                    <div class="detail-value">@Model.PublishingDate.ToString("MMMM dd, yyyy")</div>
+                </div>
+            </div>
+
+            <div class="action-section">
+                @if (Model.count > 0)
+                {
+                    <a asp-action="Buy" asp-route-id="@Model.Id" class="btn btn-buy">
+                        🛒 Buy Now
+                    </a>
+                }
+                else
+                {
+                    <button class="btn btn-buy" disabled style="opacity: 0.5; cursor: not-allowed;">
+                        Out of Stock
+                    </button>
+                }
+                <a asp-action="Index" class="btn btn-back">
+                    ← Back to Books
+                </a>
+            </div>
         </div>
     </div>
 </div>

@@ -46,6 +46,9 @@ namespace Library_WebApplication.Controllers
 
             if (checkAuth != null)
             {
+                HttpContext.Session.SetString("UserId", checkAuth.Id.ToString());
+                HttpContext.Session.SetString("Role", checkAuth.Role.Name.ToString());
+
                 var claims = new List<Claim>
 
                 {
@@ -101,7 +104,7 @@ namespace Library_WebApplication.Controllers
         {
                 var SignUP = _userBO.GetSignedUp(user);
             if (SignUP) { return RedirectToAction("Index"); }
-            else { return NotFound(); }            
+            else { return RedirectToAction("AccessDenied"); }            
         }
         public ActionResult Create()
         {
@@ -113,6 +116,10 @@ namespace Library_WebApplication.Controllers
             var Created = _userBO.GetCreated(user);
             if (Created) { return View(); }
             else { return NotFound(); }
+        }
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
         public async Task<ActionResult> Edit(int Id) 
         {

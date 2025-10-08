@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "_DataLayout";
+}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .text-danger {
+            color: #e53e3e;
+            font-size: 13px;
+            margin-top: 6px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    ```
+    <div class="container mt-5 mb-5">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+                <h3>Contact Us</h3>
+                <p class="mb-0">We’d love to hear from you! Fill out the form below and click “Send Email”.</p>
+            </div>
+            <div class="card-body p-4">
+                <form id="contactForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label fw-bold">Full Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Your full name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-bold">Your Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Your email address" required>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label fw-bold">Subject</label>
+                        <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="message" class="form-label fw-bold">Message</label>
+                        <textarea class="form-control" id="message" rows="6" placeholder="Write your message here..." required></textarea>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-success btn-lg" onclick="sendEmail()">
+                            <i class="bi bi-send-fill me-2"></i> Send Email
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendEmail() {
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const subject = document.getElementById("subject").value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            if (!name || !email || !subject || !message) {
+                alert("Please fill in all fields before sending.");
+                return;
+            }
+
+            // Replace with your actual support email:
+            const myEmail = "ahmaadmahmouud394@gmail.com";
+
+            // Build the mailto link
+            const mailtoLink = `mailto:${myEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+                `\n${message}`
+            )}`;
+
+            // Open the default email client
+            window.location.href = mailtoLink;
+        }
+    </script>
+    ```
+
+</body>
+</html>
