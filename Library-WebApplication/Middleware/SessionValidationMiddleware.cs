@@ -58,6 +58,11 @@ namespace Library_WebApplication.Middleware
                         _next(context);
                         return;
                     }
+                    if (path.StartsWith("/client"))
+                    {
+                        _next(context);
+                        return;
+                    }
                     break;
                 case "Employee":
                     if (path.StartsWith("/employee"))
@@ -147,73 +152,5 @@ namespace Library_WebApplication.Middleware
             // The rest of the requests (authenticated and authorized) proceed
             await _next(context);
         }
-        //public async Task InvokeAsync(HttpContext context, AuthenticationBO authBO)
-        //{
-        //    var path = context.Request.Path.Value?.ToLower();
-        //    Console.WriteLine("-------------------------------");
-        //    Console.WriteLine(path);
-        //    Console.WriteLine("-------------------------------");
-
-
-        //    // Allow access to SignIn, SignUp, or static files
-        //    if (path != null &&
-        //        (path.Contains("/User/Index") ||
-        //         path.Contains("/User/Signup") ||
-        //         path.Contains("/css") ||
-        //         path.Contains("/js") ||
-        //         path.Contains("/images")))
-        //    {
-        //        await _next(context);
-        //        return;
-        //    }
-
-        //    var UserId = context.Session.GetString("UserId");
-        //    int ID;
-        //    Int32.TryParse(UserId, out ID);
-        //    var token = context.Session.GetString("Token");
-        //    var role = context.Session.GetString("Role");
-        //    var user = new User()
-        //    {
-        //        Id = ID
-        //    };
-
-    //    if (path.StartsWith("/User"))
-    //    {
-    //        await _next(context);
-    //        return;
-    //    }
-    //    if (string.IsNullOrEmpty(token))
-    //    {
-    //        var userAuth = authBO.GetAuthenticated(user);
-    //    }
-    //    // Check session for logged-in user
-    //    if (string.IsNullOrEmpty(UserId))
-    //    {
-    //        // Not logged in → redirect to SignIn
-    //        context.Response.Redirect("/Authentications/SignIn");
-    //        return;
-    //    }
-
-
-
-    //    if (user == null)
-    //    {
-    //        //context.Session.Clear();
-    //        context.Response.Redirect("/Authentications/SignIn");
-
-    //    }
-
-    //    //role = user.Role.Name;
-    //    if (path.StartsWith("/admin") && role != "Admin")
-    //    {
-
-    //        context.Response.Redirect("/Authentications/AccessDenied");
-
-    //        return;
-    //    }
-
-
-    //    await _next(context);
-    //}
 }
 }
