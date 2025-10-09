@@ -58,9 +58,9 @@ namespace Library_WebApplication.Controllers
             if (Created) { return RedirectToAction("Index"); }
             else { return NotFound(); }
         }
-        public async Task<ActionResult> Edit(int Id) 
+        public  ActionResult Edit(int Id) 
         {
-            var user = await _userBO.FindUser(Id);
+            var user =  _userBO.FindUser(Id);
             if (user == null)
             {
                return NotFound();

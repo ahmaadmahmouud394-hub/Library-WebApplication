@@ -58,7 +58,7 @@ namespace Library_WebApplication.Controllers
         }
         public async Task<ActionResult> Edit(int Id) 
         {
-            var user = await _userBO.FindUser(Id);
+            var user =  _userBO.FindUser(Id);
             if (user == null)
             {
                return NotFound();

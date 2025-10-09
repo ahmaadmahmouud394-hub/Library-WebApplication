@@ -29,7 +29,7 @@ namespace Library_WebApplication.Controllers
             int ParsedSession;
             Int32.TryParse(session, out ParsedSession);
             var Profile = _userBO.FindUser(ParsedSession);
-            return View(await Profile);
+            return View( Profile);
         }
         [Route("Client/User/ContactUs")]
         public IActionResult ContactUs()
@@ -68,7 +68,7 @@ namespace Library_WebApplication.Controllers
         }
         public async Task<ActionResult> Edit(int Id) 
         {
-            var user = await _userBO.FindUser(Id);
+            var user =  _userBO.FindUser(Id);
             if (user == null)
             {
                return NotFound();

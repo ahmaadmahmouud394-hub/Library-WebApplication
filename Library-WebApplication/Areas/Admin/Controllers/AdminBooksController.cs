@@ -114,7 +114,7 @@ namespace Library_WebApplication.Controllers
 
             return View(await book);
         }
-        [HttpPost, ActionName("Delete")]
+        [HttpDelete, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

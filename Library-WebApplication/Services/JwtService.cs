@@ -54,6 +54,47 @@ namespace Library_WebApplication.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        public bool ValidateToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_secret);
+
+            try
+            {
+                var validationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = _issuer,
+                    ValidateAudience = true,
+                    ValidAudience = _audience,
+                    ValidateLifetime = true, // Check expiration
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+
+                tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+
+                // Ensure it's a JWT and signed with the right algorithm
+                if (validatedToken is JwtSecurityToken jwtToken &&
+                    jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                {
+
+                    string jbwName = jwtToken.Claims.FirstOrDefault(c => c.Type == "unique_name").ToString();
+                    Console.WriteLine(jbwName);
+
+
+                    return true;
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false; // Invalid, expired, or tampered token
+            }
+        }
+
 
     }
 }

@@ -37,9 +37,9 @@ namespace Library_WebApplication.Busniness_Object
             if (user != null) {user.Password = _encryption.Encrypt(user.Password); _context.Add(user); _context.SaveChanges(); return true; }
             else { return false; }
         }
-        public async Task<User?> FindUser(int id)
+        public User FindUser(int id)
         {
-            var UserFound = await _context.User.FindAsync(id);
+            var UserFound =  _context.User.Find(id);
             return UserFound;
         }
         public bool GetEdited(User user)

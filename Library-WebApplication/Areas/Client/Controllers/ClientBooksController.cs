@@ -22,14 +22,14 @@ namespace Library_WebApplication.Controllers
             _userBO = userBO;
         }
         [Route("Client/Books")]
-        public async Task<IActionResult> Index()
+        public  IActionResult Index()
         {
             var appDbContext = _context.Books.Include(b => b.Author)
                                 .Include(b => b.Pubblisher)
                                 .Include(b => b.Tipology)
                                 .Include(b => b.Invoices);
 
-            return View(await appDbContext.ToListAsync());
+            return View(appDbContext.ToList());
         }
         // Get Method
         public IActionResult Create() {
@@ -91,7 +91,7 @@ namespace Library_WebApplication.Controllers
             Int32.TryParse(session, out parsedsession);
             var user = _userBO.FindUser(parsedsession);
 
-            _booksBO.GetBought(id,await user);
+            _booksBO.GetBought(id, user);
             return RedirectToAction("Index","Books");
         }
 

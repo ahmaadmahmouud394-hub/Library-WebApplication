@@ -42,9 +42,9 @@ namespace Library_WebApplication.Middleware
                 path = referer.ToLower();
             }
 
-            if(path.StartsWith("/user"))
+            if (path.StartsWith("/user"))
             {
-                _next(context);
+                await _next(context);
                 return;
             }
             var userIdString = context.Session.GetString("UserId");
@@ -55,26 +55,27 @@ namespace Library_WebApplication.Middleware
                 case "Admin":
                     if (path.StartsWith("/admin"))
                     {
-                        _next(context);
+                        await _next(context);
                         return;
                     }
                     if (path.StartsWith("/client"))
                     {
-                        _next(context);
+                        role = "Client";
+                        await _next(context);
                         return;
                     }
                     break;
                 case "Employee":
                     if (path.StartsWith("/employee"))
                     {
-                        _next(context);
+                         await _next(context);
                         return;
                     }
                     break;
                 case "Client":
                     if (path.StartsWith("/client"))
                     {
-                        _next(context);
+                        await _next(context);
                         return;
                     }
                     break;
@@ -82,21 +83,6 @@ namespace Library_WebApplication.Middleware
                 default:
                     context.Response.Redirect("/User/AccessDenied");
                     break;
-            }
-            if (path.StartsWith("/admin"))
-            {
-                _next(context);
-                return;
-            }
-            if (path.StartsWith("/employee"))
-            {
-                _next(context);
-                return;
-            }
-            if (path.StartsWith("/client"))
-            {
-                _next(context);
-                return;
             }
 
             // Paths like /User/SomeOtherAction should be allowed *only* if authenticated.
@@ -152,5 +138,5 @@ namespace Library_WebApplication.Middleware
             // The rest of the requests (authenticated and authorized) proceed
             await _next(context);
         }
-}
+    }
 }

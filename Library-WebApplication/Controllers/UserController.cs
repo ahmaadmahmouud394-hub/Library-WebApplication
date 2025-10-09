@@ -31,14 +31,6 @@ namespace Library_WebApplication.Controllers
         {
             return View();
         }
-        //login Method
-        //[HttpPost("login")]
-        //public ActionResult Index(User user)
-        //{
-        //    User? ChechAuth = _authBO.GetAuthenticated(user);
-        //    if (ChechAuth != null) { return RedirectToAction("Index", "Books", new {area = ChechAuth.Role.Name}); }
-        //    else { return NotFound(); }
-        //}
         [HttpPost]
         public async Task<ActionResult> Index(User user)
         {
@@ -76,6 +68,13 @@ namespace Library_WebApplication.Controllers
 
                 // ✅ Generate JWT token
                 var token = await _jwtService.GenerateToken(checkAuth, checkAuth.Role.Name);
+                Console.WriteLine("-------------------------------------------");
+                Console.WriteLine(token);
+                Console.WriteLine("-------------------------------------------");
+                var checktoken = _jwtService.ValidateToken(token);
+                Console.WriteLine("-------------------------------------------");
+                Console.WriteLine(checktoken);
+                Console.WriteLine("-------------------------------------------");
 
                 // ✅ Store token in cookie (optional, so MVC app can u se it)
                 Response.Cookies.Append("AuthToken", token, new CookieOptions
@@ -123,7 +122,7 @@ namespace Library_WebApplication.Controllers
         }
         public async Task<ActionResult> Edit(int Id) 
         {
-            var user = await _userBO.FindUser(Id);
+            var user =  _userBO.FindUser(Id);
             if (user == null)
             {
                return NotFound();
