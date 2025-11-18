@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Library_WebApplication.Models
 {
@@ -14,6 +15,7 @@ namespace Library_WebApplication.Models
         public DateTime DateOfBirth { get; set; }
         [Required]
         public DateTime DateOfDeath { get; set; }
+        [JsonIgnore]
         public ICollection<Book> Books { get; set; }
 
     }

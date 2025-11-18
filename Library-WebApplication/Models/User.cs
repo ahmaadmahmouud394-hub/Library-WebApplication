@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Library_WebApplication.Models
 {
@@ -26,7 +27,7 @@ namespace Library_WebApplication.Models
         [Required]
         public int IdRole { get; set; }
         public Role Role { get; set; }
-
+        [JsonIgnore]
         public ICollection<Invoice> Invoices { get; set; }
 
 

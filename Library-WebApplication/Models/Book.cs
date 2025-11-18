@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Library_WebApplication.Models
 {
@@ -29,6 +30,7 @@ namespace Library_WebApplication.Models
         public DateTime PublishingDate { get; set; }
         [Required]
         public double Price { get; set; }
+        [JsonIgnore]
         public ICollection<Invoice> Invoices { get; set; }
         [Required]
         public int count { get; set; }

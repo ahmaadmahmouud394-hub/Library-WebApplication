@@ -24,6 +24,7 @@ namespace Library_WebApplication.Middleware
                 (
                  path.StartsWith("/css") ||
                  path.StartsWith("/js") ||
+                 path.StartsWith("/api") ||
                  path.StartsWith("/images")))
             {
                 await _next(context);
@@ -68,7 +69,7 @@ namespace Library_WebApplication.Middleware
                 case "Employee":
                     if (path.StartsWith("/employee"))
                     {
-                         await _next(context);
+                        await _next(context);
                         return;
                     }
                     break;
